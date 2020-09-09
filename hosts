@@ -1,0 +1,13 @@
+[localhost_group]
+localhost ansible_host=172.31.22.227 ansible_user=ansadmin
+
+[backup_group]
+backup_server ansible_host=172.31.30.237 ansible_user=ansadmin
+
+[restore_group]
+restore_server ansible_host=172.31.22.124 ansible_user=ansadmin
+
+[local_db_group]
+172.31.22.227 ansible_user=ansadmin
+172.31.30.237 ansible_user=ansadmin
+

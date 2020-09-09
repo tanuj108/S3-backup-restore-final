@@ -1,0 +1,8 @@
+#!/usr/bin/ansible-playbook
+ - name: Restore the backup files into appropriate Databases 
+   hosts: restore_server
+   vars_files: VAR.yml
+   gather_facts: no
+   tasks:
+   - name: Restore the Postgres Database by running restore.sh script
+     shell: "{{ restoreScript }}"      

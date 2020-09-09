@@ -1,0 +1,29 @@
+#!/usr/bin/ansible-playbook
+ - name: Identify the latest backup file from the Backup Server
+   hosts: backup_server
+   vars_files: VAR.yml
+   gather_facts: no
+   tasks:
+   - name: Identify the latest file in the postgres backup directory
+     shell: |
+        cd {{ postgresDirPath }}
+        ls -rt | tail -1
+     register: location
+   - name: Store filename in a variable
+     set_fact:
+       latest: "{{location.stdout}}"
+   - debug: var=latest
+
+
+ - name: Copy the lastest backup files from Backup Server to Restore Server
+   hosts: localhost
+   vars_files: VAR.yml
+   gather_facts: no
+   tasks:
+   - name: Fetch the latest postgres backup filename
+     set_fact:
+       loc: "{{hostvars['backup_server']['latest']}}"
+   - debug: msg="in play2 {{loc}}"
+   - name: Copy the postgres backup file to Restore server from DB server using scp
+     shell: scp -3 {{ sourcePath }}/{{loc}} {{ destPath }}
+
