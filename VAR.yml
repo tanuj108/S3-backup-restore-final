@@ -3,4 +3,4 @@ postgresDirPath: "/var/lib/postgresql"
 sourcePath: "ansadmin@172.31.30.237:/var/lib/postgresql"
 destPath: "ansadmin@172.31.22.124:/home/ansadmin/"
 restoreScript: "/var/lib/postgresql/restore.sh"
-
+copiedFilePath: "/home/ansadmin/"
