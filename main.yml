@@ -1,4 +1,0 @@
-#!/usr/bin/ansible-playbook
- - import_playbook: copy.yml
- - import_playbook: extract.yml
- - import_playbook: restore.yml
