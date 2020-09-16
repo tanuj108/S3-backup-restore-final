@@ -1,0 +1,8 @@
+---
+objectpath: "s3://tanuj108demo/postgres-backup"
+accesskey: "AKIAVH6O76V5G5TOR7V5"
+secretkey: "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"
+bucketname: "tanuj108demo"
+localpath: "/var/lib/jenkins/ansible_work/"
+destpath: "/home/ansadmin/"
+restorescript: "/var/lib/postgresql/restore.sh"

@@ -1,0 +1,44 @@
+#!/usr/bin/ansible-playbook
+ - name: Copy the backup files from S3 Bucket to Localhost
+   hosts: localhost
+   gather_facts: no
+   become: yes
+   vars_files: vars3.yml
+   tasks:
+    - name: Identify the latest object in the postgres backup directory in S3 bucket
+      shell: |
+         aws s3 ls {{objectpath}} --recursive | sort | tail -1 | awk '{print $4}'  
+      register: s3object
+
+    - name: Identify the filename in the postgres backup directory in S3 bucket
+      shell: |
+         aws s3 ls {{objectpath}} --recursive | sort | tail -1 | awk '{split($4,a,"/"); print a[2]}'
+      register: filename  
+
+    - name: Store objectname and filename in variables
+      set_fact:
+       oname: "{{s3object.stdout}}"
+       fname: "{{filename.stdout}}"
+
+    - debug: 
+         msg: "objectname is --> {{oname}} and filename is --> {{fname}}"
+  
+    - name: Fetch the file from s3 bucket
+      aws_s3:
+        aws_access_key: "{{accesskey}}"
+        aws_secret_key: "{{secretkey}}"
+        bucket: "{{bucketname}}"
+        object: "{{oname}}"
+        dest: "{{localpath}}{{fname}}"
+        mode: get
+
+    - name: Copy the file onto the Restore Server
+      copy:
+        src: "{{localpath}}{{fname}}"
+        dest: "{{destpath}}"
+      delegate_to: restore_server
+   
+    - name: Delete the file from localhost
+      file:
+        path: "{{localpath}}{{fname}}"
+        state: absent

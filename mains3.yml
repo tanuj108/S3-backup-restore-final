@@ -1,0 +1,5 @@
+#!/usr/bin/ansible-playbook
+ - import_playbook: copys3.yml
+ - import_playbook: extracts3.yml
+ - import_playbook: restores3.yml
+
