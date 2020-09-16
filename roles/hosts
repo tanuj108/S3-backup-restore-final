@@ -1,9 +1,0 @@
-[localhost]
-3.17.12.161 ansible_user=ansadmin
-
-[db_server]
-18.217.55.176 ansible_user=ansadmin
-
-[restore_server]
-3.136.83.7 ansible_user=ansadmin
-
